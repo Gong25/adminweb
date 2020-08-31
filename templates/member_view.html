@@ -1,0 +1,38 @@
+
+{% include 'layout.html' %}
+<div class = "w3-padding-large w3-text-black" id = "main">
+    
+    <h2 class = "w3-text-light-grey">학생현황</h2>
+    <hr style="width:300px" class = "w3-opacity">
+    
+    
+
+    
+<form action = 'proc_member_del',class = 'w3-container', method = "POST">
+    <table class = 'w3-table-all'>
+        <tr class = 'w3-red'>
+            <th>NO</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>전화번호</th>
+            <th></th>
+        </tr>
+
+        {% for row in rows %}
+
+        <tr>
+            <td>{{loop.index}}</td>
+            <td>{{row[1]}}</td>
+            <td>{{row[2]}}</td>
+            <td>{{row[3]}}</td>
+            <td><input type = "checkbox" name = "check[]" value = "{{row[0]}}"></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a class = 'w3-button w3-round w3-blue' href = "/member_add">추가하기</a>
+       <button type="submit" class = "w3-button w3-round w3-blue" onclick = "return confirm('삭제하시겠습니까?')">삭제하기</button></p>
+
+</form>
+
+</div>

@@ -1,0 +1,21 @@
+{% include 'layout.html' %}
+<div class = "w3-padding-large w3-text-black" id = "main">
+    
+    <h2 class = "w3-text-light-grey">학생추가</h2>
+    <hr style="width:300px" class = "w3-opacity">
+    
+    
+    <form action = '/proc_member_add' ,class = "w3-container" , method = "POST">
+    <label class = "w3-text-white"><b>이름</b></label>
+    <input class = "w3-input w3-border" type = "text" name = 'name'>
+    <p>
+    <label class = "w3-text-white"><b>나이</b></label>
+    <input class = "w3-input w3-border" type = "number" name = 'age'></p>
+    <p>
+    <label class = "w3-text-white"><b>전화번호</b></label>
+    <input class = "w3-input w3-border" type = "text" name = 'phone'></p>
+    <p>
+    <button class = "w3-button w3-round w3-blue" onclick = "return confirm('저장하시겠습니까?')">입력하기</button></p>
+    </form>
+    
+</div>
