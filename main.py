@@ -21,27 +21,31 @@ def index():
         return render_template('admin_index.html')
     return render_template("index.html")
 
+def make_list():
+    conn = sqlite3.connect('projectC.db')
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM member')
+    rows = cur.fetchall()  #리스트형식으로 DB데이터 모두 긁어옴
+    df=pd.DataFrame(rows) #DB데이터를 데이터프레임으로 전혼
+    age_list = df[2] #나이 데이트가 있는 열만 추출
+    # print(age_list)
+    return age_list
+
 
 @app.route("/graph")
 def graph():
     if not ('username' in session):
         return redirect('/login')
-    poverty_lever = pd.read_csv('static/PercentagePeopleBelowPovertyLevel.csv', encoding='windows-1252')
-    poverty_lever.poverty_rate.replace(['-'],0.0,inplace=True)
-    poverty_lever.poverty_rate = poverty_lever.poverty_rate.astype(float)
-    area_list = list(poverty_lever['Geographic Area'].unique())
-    area_poverty_rate_ratio = []
-    for i in area_list:
-        x = poverty_lever[poverty_lever['Geographic Area'] == i]
-        area_poverty_rate = sum(x.poverty_rate)/len(x)
-        area_poverty_rate_ratio.append(area_poverty_rate)
-
-    data = pd.DataFrame({'area_list' : area_list, 'area_poverty_rate_ratio':area_poverty_rate_ratio})
-    new_index = (data['area_poverty_rate_ratio'].sort_values(ascending=False)).index.values
-    sort_data = data.reindex(new_index)
-
-    plt.figure(figsize=(10,3))
-    sns.barplot(x=sort_data['area_list'],y=sort_data['area_poverty_rate_ratio'])
+    age_list = make_list()
+    df_x = [int(i) for i in age_list.unique()] #age리스트에서 중복되는것 빼고 x축으로 사용하기위해 추출
+    df_y = [int(i) for i in age_list.value_counts()] #age리스트에서 value를 count해서 y축으로 사용하기위해 추출
+        #그래프를 int로 표현하기 위해 리스트컴프리헨션을 사용했으나 안먹힘...연구 더 필요
+    # plt.figure(figsize=(10,3))
+    plt.bar(df_x, df_y)
+    
+    plt.xlabel("age")
+    plt.ylabel("number of students")
     # plt.savefig(fname="D:\coronaweb\static" , format="png")
     buf = BytesIO()
     plt.savefig(buf, format="png")
@@ -127,7 +131,7 @@ def video_view():
     cur = conn.cursor()
     cur.execute('SELECT * FROM video')
     rows = cur.fetchall()
-    return render_template('member_view.html', rows = rows)
+    return render_template('video_view.html', rows = rows)
 
 
-
+app.run(port="8080", debug=True)
