@@ -134,4 +134,4 @@ def video_view():
     return render_template('video_view.html', rows = rows)
 
 
-app.run(port="8080", debug=True)
+# app.run(port="8080", debug=True)
