@@ -38,8 +38,10 @@ def graph():
     if not ('username' in session):
         return redirect('/login')
     age_list = make_list()
-    df_x = [int(i) for i in age_list.unique()] #age리스트에서 중복되는것 빼고 x축으로 사용하기위해 추출
-    df_y = [int(i) for i in age_list.value_counts()] #age리스트에서 value를 count해서 y축으로 사용하기위해 추출
+    df_x = age_list.unique() #age리스트에서 중복되는것 빼고 x축으로 사용하기위해 추출
+    df_y = age_list.value_counts() #age리스트에서 value를 count해서 y축으로 사용하기위해 추출
+    df_y = df_y.sort_index(ascending=True) #value_count하면 기존의 value가 인덱스가 됨.인덱스기준으로 정렬
+    # print(df_y)
         #그래프를 int로 표현하기 위해 리스트컴프리헨션을 사용했으나 안먹힘...연구 더 필요
     # plt.figure(figsize=(10,3))
     plt.bar(df_x, df_y)
