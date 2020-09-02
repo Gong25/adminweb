@@ -1,5 +1,5 @@
 # Admin_web
-파이썬과 flask를 활용하여 만든 관리자 페이지 (MVC모델)
+인원관리, 통계그래프를 확인할 수 있는 관리자 페이지
 
 ## Features
 - 로그인 페이지, 멤버추가 및 삭제기능 구현
@@ -8,5 +8,5 @@
 
 ## Program stacks
 - HTML , W3-CSS
-- Python / flask
+- Python
 - sqlite3
