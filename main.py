@@ -11,7 +11,6 @@ import seaborn as sns
 from dao import member_dao
 import sqlite3
 app = Flask(__name__)
-app.secret_key = b'34_3erg#edsQ\zde]'
 
 
 
